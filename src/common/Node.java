@@ -4,23 +4,38 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
+import static common.PublicValue.PUZZLE_SIZE;
 
 public class Node {
     private State state;
     private Node parent;
     private int cost = 0;
 
-    public enum Action{
-        UP,DOWN,
-        LEFT,RIGHT
+    public enum Action {
+        UP, DOWN,
+        LEFT, RIGHT
     }
 
     public Node(State state) {
         this.state = state;
     }
 
-    public List<Node> soccesoreFunction(){
+    public Node getParent() {
+        return parent;
+    }
+
+    public boolean fitness() {
+        int count = 1;
+        for (int i = 0; i < PUZZLE_SIZE; i++)
+            for (int j = 0; j < PUZZLE_SIZE; j++)
+                if (count != PUZZLE_SIZE * PUZZLE_SIZE && state.getIndex(i, j) != count++) {
+                    return false;
+                }
+        return true;
+    }
+
+    public List<Node> successorFunction() {
         List<Node> result = new ArrayList<>();
         Node temp;
 
@@ -47,11 +62,11 @@ public class Node {
         return result;
     }
 
-    private Node doAction(Action act){
+    private Node doAction(Action act) {
         Pair<State, Integer> pair = null;
-        switch (act){
+        switch (act) {
             case UP:
-                 pair = this.state.up();
+                pair = this.state.up();
                 break;
             case DOWN:
                 pair = this.state.down();
@@ -77,7 +92,7 @@ public class Node {
             return super.equals(obj);
 
         Node n = (Node) obj;
-        if (n.cost>this.cost)
+        if (n.cost >= this.cost)
             return n.state.equals(this.state);
         return false;
     }
@@ -87,7 +102,7 @@ public class Node {
         return state.toString() + cost;
     }
 
-    public static Node getInput(){
+    public static Node getInput() {
         return new Node(State.getFromInput());
     }
 }

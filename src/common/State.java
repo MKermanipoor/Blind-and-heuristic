@@ -103,6 +103,10 @@ public class State {
         return new Pair<>(result, cost);
     }
 
+    public int getIndex(int i, int j){
+        return puzzle[i][j];
+    }
+
     @Override
     public String toString() {
         StringBuilder st = new StringBuilder();

@@ -126,4 +126,9 @@ public class State {
 
         return new State(p);
     }
+
+    @Override
+    public int hashCode() {
+        return this.puzzle.toString().hashCode();
+    }
 }

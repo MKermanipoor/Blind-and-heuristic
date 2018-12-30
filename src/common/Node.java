@@ -11,6 +11,7 @@ public class Node {
     private State state;
     private Node parent;
     private int cost = 0;
+    private long level = 0;
 
     public enum Action {
         UP, DOWN,
@@ -82,6 +83,7 @@ public class Node {
             return null;
         Node result = new Node(pair.getKey());
         result.parent = this;
+        result.level = this.level + 1;
         result.cost = this.cost + pair.getValue();
         return result;
     }
@@ -95,6 +97,15 @@ public class Node {
         if (n.cost >= this.cost)
             return n.state.equals(this.state);
         return false;
+    }
+
+    public long getLevel() {
+        return level;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.state.hashCode();
     }
 
     @Override

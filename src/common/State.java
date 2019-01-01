@@ -103,7 +103,7 @@ public class State {
         return new Pair<>(result, cost);
     }
 
-    public int getIndex(int i, int j){
+    public int getIndex(int i, int j) {
         return puzzle[i][j];
     }
 
@@ -129,6 +129,11 @@ public class State {
 
     @Override
     public int hashCode() {
-        return this.puzzle.toString().hashCode();
+        int result = puzzle[0][0];
+        for (int i = 0; i < PUZZLE_SIZE; i++)
+            for (int j = 0; j < PUZZLE_SIZE; j++)
+                result = result * 10 + puzzle[i][j];
+
+        return result;
     }
 }

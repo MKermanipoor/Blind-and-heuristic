@@ -12,10 +12,27 @@ public class Node {
     private Node parent;
     private int cost = 0;
     private long level = 0;
+    private Action action;
 
     public enum Action {
         UP, DOWN,
-        LEFT, RIGHT
+        LEFT, RIGHT;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case DOWN:
+                    return "Down";
+                case UP:
+                    return "Up";
+                case LEFT:
+                    return "Left";
+                case RIGHT:
+                    return "Right";
+                default:
+                    return super.toString();
+            }
+        }
     }
 
     public Node(State state) {
@@ -84,6 +101,7 @@ public class Node {
         Node result = new Node(pair.getKey());
         result.parent = this;
         result.level = this.level + 1;
+        result.action = act;
         result.cost = this.cost + pair.getValue();
         return result;
     }
@@ -103,6 +121,10 @@ public class Node {
         return level;
     }
 
+    public int getCost() {
+        return cost;
+    }
+
     @Override
     public int hashCode() {
         return this.state.hashCode();
@@ -110,7 +132,10 @@ public class Node {
 
     @Override
     public String toString() {
-        return state.toString() + cost;
+        if (action != null)
+            return action + "\n" + state.toString() + "cost : " + cost;
+        else
+            return state.toString() + "cost : " + cost;
     }
 
     public static Node getInput() {

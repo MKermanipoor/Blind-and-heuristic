@@ -1,12 +1,18 @@
-package bfs;
+package ucs;
 
 import common.Node;
 
 import java.util.*;
 
-public class BFSSearch {
+public class UCS {
     Set<Integer> visitSet = new HashSet<>();
-    Queue<Node> queue = new LinkedList<>();
+    PriorityQueue<Node> queue = new PriorityQueue<>(new Comparator<Node>() {
+        @Override
+        public int compare(Node o1, Node o2) {
+            return o1.getCost() - o2.getCost();
+        }
+    });
+
     Node last;
     public void run(){
         queue.add(Node.getInput());

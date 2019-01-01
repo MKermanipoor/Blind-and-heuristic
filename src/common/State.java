@@ -103,6 +103,21 @@ public class State {
         return new Pair<>(result, cost);
     }
 
+    public int getHeuristic() {
+        int result = 0;
+        int count = 1;
+        for (int i = 0; i < PUZZLE_SIZE; i++) {
+            for (int j = 0; j < PUZZLE_SIZE; j++) {
+                if (count == PUZZLE_SIZE * PUZZLE_SIZE)
+                    continue;
+                if (puzzle[i][j] != count && puzzle[i][j] != count - 1)
+                    result++;
+                count++;
+            }
+        }
+        return result;
+    }
+
     public int getIndex(int i, int j) {
         return puzzle[i][j];
     }

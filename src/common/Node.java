@@ -117,13 +117,21 @@ public class Node {
         return false;
     }
 
-    public long getLevel() {
-        return level;
+    public int getHeuristic(){
+        return this.state.getHeuristic();
     }
 
     public int getCost() {
         return cost;
     }
+
+    public int getF(){
+        return this.getCost() + this.getHeuristic();
+    }
+    public long getLevel() {
+        return level;
+    }
+
 
     @Override
     public int hashCode() {

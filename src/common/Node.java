@@ -106,15 +106,72 @@ public class Node {
         return result;
     }
 
+    public List<Node> reverseSuccessorFunction(){
+        List<Node> result = new ArrayList<>();
+        Node temp;
+
+        //up
+        temp = this.doReverseAction(Action.UP);
+        if (temp != null)
+            result.add(temp);
+
+        //down
+        temp = this.doReverseAction(Action.DOWN);
+        if (temp != null)
+            result.add(temp);
+
+        //left
+        temp = this.doReverseAction(Action.LEFT);
+        if (temp != null)
+            result.add(temp);
+
+        //right
+        temp = this.doReverseAction(Action.RIGHT);
+        if (temp != null)
+            result.add(temp);
+
+        return result;
+    }
+
+    public Node doReverseAction(Action act){
+        Pair<State, Integer> pair = null;
+        switch (act) {
+            case UP:
+                pair = this.state.down();
+                break;
+            case DOWN:
+                pair = this.state.up();
+                break;
+            case LEFT:
+                pair = this.state.right();
+                break;
+            case RIGHT:
+                pair = this.state.left();
+                break;
+        }
+        if (pair == null)
+            return null;
+        Node result = new Node(pair.getKey());
+        result.parent = this;
+        result.level = this.level + 1;
+        result.action = act;
+        result.cost = this.cost + pair.getValue();
+        return result;
+    }
+
     @Override
     public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
         if (!(obj instanceof Node))
             return super.equals(obj);
 
         Node n = (Node) obj;
-        if (n.cost >= this.cost)
-            return n.state.equals(this.state);
-        return false;
+        return n.state.equals(this.state);
+    }
+
+    public static Node getGoalNode(){
+        return new Node(State.getGoalState());
     }
 
     public int getHeuristic(){

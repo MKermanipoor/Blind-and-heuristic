@@ -14,6 +14,7 @@ public class State {
                 temp[i][j] = cont++;
             }
         }
+        temp[PUZZLE_SIZE-1][PUZZLE_SIZE-1] = 0;
         arrayCode = temp;
     }
 
@@ -35,8 +36,15 @@ public class State {
         }
     }
 
+    public static State getGoalState(){
+        return new State(arrayCode);
+    }
+
     @Override
     public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+
         if (!(obj instanceof State))
             return super.equals(obj);
 

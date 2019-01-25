@@ -14,7 +14,7 @@ public class State {
                 temp[i][j] = cont++;
             }
         }
-        temp[PUZZLE_SIZE-1][PUZZLE_SIZE-1] = 0;
+        temp[PUZZLE_SIZE - 1][PUZZLE_SIZE - 1] = 0;
         arrayCode = temp;
     }
 
@@ -36,7 +36,7 @@ public class State {
         }
     }
 
-    public static State getGoalState(){
+    public static State getGoalState() {
         return new State(arrayCode);
     }
 
@@ -118,8 +118,21 @@ public class State {
             for (int j = 0; j < PUZZLE_SIZE; j++) {
                 if (count == PUZZLE_SIZE * PUZZLE_SIZE)
                     continue;
-                if (puzzle[i][j] != count && puzzle[i][j] != count - 1)
+                if (puzzle[i][j] != count && puzzle[i][j] > 0) {
                     result++;
+                    //left
+                    if (j > 0 && puzzle[i][j] == count - 1)
+                        result--;
+                    //right
+                    else if (j < PUZZLE_SIZE - 1 && puzzle[i][j] == count + 1)
+                        result--;
+                    //down
+                    else if (i < PUZZLE_SIZE - 1 && puzzle[i][j] == count + PUZZLE_SIZE)
+                        result--;
+                    //up
+                    else if (i > 0 && puzzle[i][j] == count - PUZZLE_SIZE)
+                        result--;
+                }
                 count++;
             }
         }
